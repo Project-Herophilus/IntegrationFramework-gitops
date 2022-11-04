@@ -61,7 +61,7 @@ spec:
           # envFrom:
           #   - secretRef:
           #       name: asana-secret
-          image: quay.io/redhathealthcare/idaas-connect-hl7:0.0.1
+          image: quay.io/redhathealthcare/idaas-connect-hl7:3.9.7-SNAPSHOT
           readinessProbe:
             httpGet:
               path: /actuator/health
