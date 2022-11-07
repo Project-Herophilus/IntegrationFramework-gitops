@@ -22,13 +22,13 @@ spec:
         version: v1
     spec:
       volumes:
-        # - name: config
-        #   secret:
-        #     secretName: hl7
-        #     items:
-        #       - key: application.properties
-        #         path: application.properties
-        #     defaultMode: 420
+        - name: config
+          secret:
+            secretName: hl7
+            items:
+              - key: application.properties
+                path: application.properties
+            defaultMode: 420
       containers:
         - resources:
             requests:
@@ -54,13 +54,10 @@ spec:
               containerPort: 8778
               protocol: TCP
           imagePullPolicy: IfNotPresent
-          # volumeMounts:
-          #   - name: config
-          #     mountPath: /deployments/config
+          volumeMounts:
+            - name: config
+              mountPath: /deployments/config
           terminationMessagePolicy: File
-          # envFrom:
-          #   - secretRef:
-          #       name: asana-secret
           image: quay.io/redhathealthcare/idaas-connect-hl7:3.9.7-SNAPSHOT
           readinessProbe:
             httpGet:
