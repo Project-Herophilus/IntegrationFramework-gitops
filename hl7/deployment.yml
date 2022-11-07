@@ -58,7 +58,7 @@ spec:
             - name: config
               mountPath: /deployments/config
           terminationMessagePolicy: File
-          image: quay.io/redhathealthcare/idaas-connect-hl7:3.9.7-SNAPSHOT
+          image: quay.io/redhathealthcare/idaas-connect-hl7:3.9.8-SNAPSHOT
           readinessProbe:
             httpGet:
               path: /actuator/health
