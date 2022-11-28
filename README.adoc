@@ -1,0 +1,15 @@
+= iDaaS Connect Gitops
+
+This repository contains the manifest files used to deploy iDaaS Connect components.
+
+[NOTE]
+====
+Because this is a public repository the secret required to successfully deploy the components on OpenShift are not provided here.
+You need to deploy those secrets manually.
+====
+
+== Components
+
+=== HL7
+
+you can find its secret template here: https://github.com/Project-Herophilus/iDaaS-Connect/blob/main/hl7/src/main/resources/application-dev.properties[application-dev.properties]
