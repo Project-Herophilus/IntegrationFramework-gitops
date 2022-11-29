@@ -32,11 +32,11 @@ spec:
       containers:
         - resources:
             requests:
-              memory: "128Mi"
-              cpu: "100m"
-            limits:
               memory: "500Mi"
-              cpu: "200m"
+              cpu: "500m"
+            limits:
+              memory: "900Mi"
+              cpu: "800m"
           terminationMessagePath: /dev/termination-log
           name: hl7
           env:
