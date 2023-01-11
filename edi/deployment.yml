@@ -1,0 +1,93 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    app.openshift.io/vcs-uri: 'git@github.com:Project-Herophilus/iDaaS-Connect.git'
+  name: edi
+  labels:
+    app: edi
+    group: io.connectedhealth_idaas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: edi
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+      labels:
+        app: edi
+        deploymentconfig: edi
+        version: v1
+    spec:
+      volumes:
+        - name: config
+          secret:
+            secretName: edi
+            items:
+              - key: application.properties
+                path: application.properties
+            defaultMode: 420
+      containers:
+        - resources:
+            requests:
+              memory: "500Mi"
+              cpu: "500m"
+            limits:
+              memory: "900Mi"
+              cpu: "800m"
+          terminationMessagePath: /dev/termination-log
+          name: edi
+          env:
+            - name: JAVA_OPTS_APPEND
+              value: >-
+                --spring.config.location=/deployments/config/application.properties
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: prometheus
+              containerPort: 9779
+              protocol: TCP
+            - name: jolokia
+              containerPort: 8778
+              protocol: TCP
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config
+              mountPath: /deployments/config
+          terminationMessagePolicy: File
+          image: quay.io/redhathealthcare/idaas-connect-edi:0.0.1
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 180
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
