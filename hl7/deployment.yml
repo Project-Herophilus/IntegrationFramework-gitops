@@ -64,9 +64,9 @@ spec:
               path: /actuator/health
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 10
-            timeoutSeconds: 1
-            periodSeconds: 10
+            initialDelaySeconds: 100
+            timeoutSeconds: 3
+            periodSeconds: 20
             successThreshold: 1
             failureThreshold: 3
           livenessProbe:
@@ -74,9 +74,9 @@ spec:
               path: /actuator/health
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 180
-            timeoutSeconds: 1
-            periodSeconds: 10
+            initialDelaySeconds: 120
+            timeoutSeconds: 3
+            periodSeconds: 20
             successThreshold: 1
             failureThreshold: 3
       restartPolicy: Always
