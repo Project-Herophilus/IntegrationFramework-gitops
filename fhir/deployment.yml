@@ -6,7 +6,7 @@ metadata:
   name: fhir
   labels:
     app: fhir
-    group: io.connectedhealth_idaas
+    group: io.integration_framework
 spec:
   replicas: 1
   selector:
@@ -41,8 +41,7 @@ spec:
           name: fhir
           env:
             - name: JAVA_OPTS_APPEND
-              value: >-
-                --spring.config.location=/deployments/config/application.properties
+              value: --spring.config.location=/deployments/config/application.properties
           ports:
             - name: http
               containerPort: 8080
@@ -58,7 +57,7 @@ spec:
             - name: config
               mountPath: /deployments/config
           terminationMessagePolicy: File
-          image: quay.io/redhathealthcare/hdf-fhir:0.0.1
+          image: quay.io/redhathealthcare/hdf-fhir:0.0.2
           readinessProbe:
             httpGet:
               path: /actuator/health
