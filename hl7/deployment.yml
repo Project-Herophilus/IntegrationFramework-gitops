@@ -2,7 +2,7 @@ kind: Deployment
 apiVersion: apps/v1
 metadata:
   annotations:
-    app.openshift.io/vcs-uri: 'git@github.com:Project-Herophilus/iDaaS-Connect.git'
+    app.openshift.io/vcs-uri: 'https://github.com/Project-Herophilus/IntegrationFramework-HDF.git'
   name: hl7
   labels:
     app: hl7
@@ -58,7 +58,7 @@ spec:
             - name: config
               mountPath: /deployments/config
           terminationMessagePolicy: File
-          image: quay.io/redhathealthcare/idaas-connect-hl7:0.0.1
+          image: quay.io/redhathealthcare/hdf-hl7:0.0.1
           readinessProbe:
             httpGet:
               path: /actuator/health
