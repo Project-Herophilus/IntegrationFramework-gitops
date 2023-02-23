@@ -6,7 +6,7 @@ metadata:
   name: hl7
   labels:
     app: hl7
-    group: io.connectedhealth_idaas
+    group: io.integration_framework
 spec:
   replicas: 1
   selector:
@@ -35,8 +35,8 @@ spec:
               memory: "500Mi"
               cpu: "500m"
             limits:
-              memory: "900Mi"
-              cpu: "800m"
+              memory: "2000Mi"
+              cpu: "1000m"
           terminationMessagePath: /dev/termination-log
           name: hl7
           env:
